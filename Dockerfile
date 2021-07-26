@@ -22,6 +22,15 @@ RUN sudo chown -R coder:coder /home/coder/.local
 # You can add custom software and dependencies for your environment below
 # -----------
 
+# .NET Core:
+RUN wget https://packages.microsoft.com/config/ubuntu/21.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+RUN sudo dpkg -i packages-microsoft-prod.deb
+RUN rm packages-microsoft-prod.deb
+RUN sudo apt-get update; \
+     sudo apt-get install -y apt-transport-https && \
+     sudo apt-get update && \
+     sudo apt-get install -y dotnet-sdk-5.0
+
 # Install a VS Code extension:
 # Note: we use a different marketplace than VS Code. See https://github.com/cdr/code-server/blob/main/docs/FAQ.md#differences-compared-to-vs-code
 RUN code-server --install-extension esbenp.prettier-vscode
